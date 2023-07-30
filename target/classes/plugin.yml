@@ -1,0 +1,12 @@
+name: betterHomes
+version: '1.0-SNAPSHOT'
+main: xyz.szymon3ek.betterhomes.BetterHomes
+api-version: '1.20'
+author: Szymon3eK
+description: Better homes plugin
+
+commands:
+  home:
+    description: Open home menu
+    usage: /home
+

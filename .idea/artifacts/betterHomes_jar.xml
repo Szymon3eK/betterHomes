@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="betterHomes.jar">
+    <output-path>$PROJECT_DIR$/../../Minecraft/pluginExample/plugins</output-path>
+    <root id="archive" name="betterHomes.jar">
+      <element id="module-output" name="betterHomes" />
+    </root>
+  </artifact>
+</component>
