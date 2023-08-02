@@ -51,8 +51,9 @@ public final class BetterHomes extends JavaPlugin implements Listener, CommandEx
             Player player = (Player) sender;
             Inventory menu = player.getServer().createInventory(null, InventoryType.HOPPER, "§cBetterHomes");
             FileConfiguration config = getConfig();
+            int maxhomes = config.getInt("config.maxhomes");
 
-            for (int i = 1; i <= 3; i++) {
+            for (int i = 1; i <= maxhomes; i++) {
 
                 if(config.contains("homes." + player.getName() + '.'+ i + ".x")) {
 
@@ -83,6 +84,21 @@ public final class BetterHomes extends JavaPlugin implements Listener, CommandEx
 
                     menu.setItem(i, emptyhomes);
                 }
+
+
+            }
+
+            for (int i = 3; i > maxhomes; i--) {
+
+                ItemStack maxhomesbanner = new ItemStack(Material.BLACK_BANNER);
+
+                ItemMeta maxhomesmeta = maxhomesbanner.getItemMeta();
+                maxhomesmeta.setDisplayName("§7» §c§l✗ ");
+                List<String> maxhomeslore = new ArrayList<>(); maxhomeslore.add("§7Nie mozesz ustawic wiecej homow!");
+                maxhomesmeta.setLore(maxhomeslore);
+                maxhomesbanner.setItemMeta(maxhomesmeta);
+
+                menu.setItem(i, maxhomesbanner);
 
 
             }
