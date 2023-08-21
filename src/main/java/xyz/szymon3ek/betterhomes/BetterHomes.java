@@ -161,8 +161,8 @@ public final class BetterHomes extends JavaPlugin implements Listener, CommandEx
         player.sendMessage("§a§l✓ §aUstawiono home! §a§l✓\n" + "§7X: §e" + Math.round(player.getLocation().getX() * 100.0) / 100.0 +" §7Y: §e" + Math.round(player.getLocation().getY() * 100.0) / 100.0 + " §7Z: §e " + Math.round(player.getLocation().getZ() * 100.0) / 100.0);
         player.sendTitle("§a§l✓ §aUstawiono home! §a§l✓", "§7X: §e" + Math.round(player.getLocation().getX() * 100.0) / 100.0 +" §7Y: §e" + Math.round(player.getLocation().getY() * 100.0) / 100.0 + " §7Z: §e " + Math.round(player.getLocation().getZ() * 100.0) / 100.0, 1, 60, 1);
         player.playSound(player.getLocation(), "minecraft:entity.player.levelup", 1, 1);
+        closeEQ(player);
 
-        player.closeInventory();
 
 
     }
@@ -186,8 +186,8 @@ public final class BetterHomes extends JavaPlugin implements Listener, CommandEx
             player.sendMessage("§c§l✗ §cUsunieto home! §c§l✗ \n" + "§7X: §e" + x +" §7Y: §e" + y + " §7Z: §e " + z);
             player.sendTitle("§c§l✗ §cUsunieto home! §c§l✗", "§7Pomyslnie usunales home!", 1, 60, 1);
             player.playSound(player.getLocation(), "minecraft:block.lava.extinguish", 1, 1);
+            closeEQ(player);
 
-        player.closeInventory();
 
     }
 
@@ -211,10 +211,17 @@ public final class BetterHomes extends JavaPlugin implements Listener, CommandEx
 
             player.teleport(new org.bukkit.Location(Bukkit.getWorld(world), x, y, z, yaw, pitch));
             player.playSound(player.getLocation(), "minecraft:entity.enderman.teleport", 1, 1);
-        player.sendTitle("", "§aZostales przeteleportowany!", 1, teleporttime * 20, 1);
+            player.sendTitle("", "§aZostales przeteleportowany!", 1, 60, 1);
+            closeEQ(player);
 
-        player.closeInventory();
     }
+
+    public void closeEQ(Player player) {
+        player.closeInventory();
+        player.updateInventory();
+    }
+
+
 
 
 
