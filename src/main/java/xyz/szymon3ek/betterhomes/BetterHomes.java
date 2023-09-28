@@ -21,6 +21,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import xyz.szymon3ek.betterhomes.operations.createHome;
+import xyz.szymon3ek.betterhomes.operations.deleteHome;
+import xyz.szymon3ek.betterhomes.operations.teleportHome;
+
 import java.io.*;
 import java.lang.Thread;
 
@@ -29,7 +33,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class BetterHomes extends JavaPlugin implements Listener, CommandExecutor {
+public class BetterHomes extends JavaPlugin implements Listener, CommandExecutor {
 
     @Override
     public void onEnable() {
@@ -124,17 +128,17 @@ public final class BetterHomes extends JavaPlugin implements Listener, CommandEx
             if(event.getCurrentItem().getType() == Material.LIME_BANNER) {
                 if(event.getClick().isLeftClick()) {
                     int home = event.getSlot();
-                    teleportHome(home, player);
+                    teleportHome.teleport(home, player);
                 } else if(event.getClick().isRightClick()) {
                     int home = event.getSlot();
-                    deleteHome(home, player);
+                    deleteHome.delete(home, player);
 
                 }
 
             } else if(event.getCurrentItem().getType() == Material.RED_BANNER) {
                 if(event.getClick().isLeftClick()) {
                     int home = event.getSlot();
-                    createHome(home, player);
+                    createHome.create(home, player);
 
                 }
 
@@ -145,81 +149,12 @@ public final class BetterHomes extends JavaPlugin implements Listener, CommandEx
 
 
 
-    public void createHome(int home, Player player) {
-
-
-        FileConfiguration config = getConfig();
-
-        config.set("homes." + player.getName() + "." + home + ".x", player.getLocation().getX());
-        config.set("homes." + player.getName() + "." + home + ".y", player.getLocation().getY());
-        config.set("homes." + player.getName() + "." + home + ".z", player.getLocation().getZ());
-        config.set("homes." + player.getName() + "." + home + ".yaw", player.getLocation().getYaw());
-        config.set("homes." + player.getName() + "." + home + ".pitch", player.getLocation().getPitch());
-        config.set("homes." + player.getName() + "." + home + ".world", player.getWorld().getName());
-        saveConfig();
-
-        player.sendMessage("§a§l✓ §aUstawiono home! §a§l✓\n" + "§7X: §e" + Math.round(player.getLocation().getX() * 100.0) / 100.0 +" §7Y: §e" + Math.round(player.getLocation().getY() * 100.0) / 100.0 + " §7Z: §e " + Math.round(player.getLocation().getZ() * 100.0) / 100.0);
-        player.sendTitle("§a§l✓ §aUstawiono home! §a§l✓", "§7X: §e" + Math.round(player.getLocation().getX() * 100.0) / 100.0 +" §7Y: §e" + Math.round(player.getLocation().getY() * 100.0) / 100.0 + " §7Z: §e " + Math.round(player.getLocation().getZ() * 100.0) / 100.0, 1, 60, 1);
-        player.playSound(player.getLocation(), "minecraft:entity.player.levelup", 1, 1);
-        closeEQ(player);
-
-
-
-    }
-
-    public void deleteHome(int home, Player player) {
-
-            FileConfiguration config = getConfig();
-
-            float x = Math.round(config.getDouble("homes." + player.getName() + "." + home + ".x"));
-            float y = Math.round(config.getDouble("homes." + player.getName() + "." + home + ".y"));
-            float z = Math.round(config.getDouble("homes." + player.getName() + "." + home + ".z"));
-
-            config.set("homes." + player.getName() + "." + home + ".x", null);
-            config.set("homes." + player.getName() + "." + home + ".y", null);
-            config.set("homes." + player.getName() + "." + home + ".z", null);
-            config.set("homes." + player.getName() + "." + home + ".yaw", null);
-            config.set("homes." + player.getName() + "." + home + ".pitch", null);
-            config.set("homes." + player.getName() + "." + home + ".world", null);
-            saveConfig();
-
-            player.sendMessage("§c§l✗ §cUsunieto home! §c§l✗ \n" + "§7X: §e" + x +" §7Y: §e" + y + " §7Z: §e " + z);
-            player.sendTitle("§c§l✗ §cUsunieto home! §c§l✗", "§7Pomyslnie usunales home!", 1, 60, 1);
-            player.playSound(player.getLocation(), "minecraft:block.lava.extinguish", 1, 1);
-            closeEQ(player);
-
-
-    }
 
 
 
 
-    public void teleportHome(int home, Player player) {
-
-            FileConfiguration config = getConfig();
-
-            int teleporttime = config.getInt("config.teleporttime");
 
 
-
-            float x = Math.round(config.getDouble("homes." + player.getName() + "." + home + ".x"));
-            float y = Math.round(config.getDouble("homes." + player.getName() + "." + home + ".y"));
-            float z = Math.round(config.getDouble("homes." + player.getName() + "." + home + ".z"));
-            float yaw = Math.round(config.getDouble("homes." + player.getName() + "." + home + ".yaw"));
-            float pitch = Math.round(config.getDouble("homes." + player.getName() + "." + home + ".pitch"));
-            String world = config.getString("homes." + player.getName() + "." + home + ".world");
-
-            player.teleport(new org.bukkit.Location(Bukkit.getWorld(world), x, y, z, yaw, pitch));
-            player.playSound(player.getLocation(), "minecraft:entity.enderman.teleport", 1, 1);
-            player.sendTitle("", "§aZostales przeteleportowany!", 1, 60, 1);
-            closeEQ(player);
-
-    }
-
-    public void closeEQ(Player player) {
-        player.closeInventory();
-        player.updateInventory();
-    }
 
 
 
