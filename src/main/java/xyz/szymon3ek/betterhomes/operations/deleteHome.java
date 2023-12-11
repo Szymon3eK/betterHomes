@@ -22,6 +22,11 @@ public class deleteHome extends BetterHomes {
         config.set("homes." + player.getName() + "." + home + ".yaw", null);
         config.set("homes." + player.getName() + "." + home + ".pitch", null);
         config.set("homes." + player.getName() + "." + home + ".world", null);
+
+        if(config.contains("homes." + player.getName() + "." + home + ".name")) {
+            config.set("homes." + player.getName() + "." + home + ".name", null);
+        }
+
         plugin.saveConfig();
 
         player.sendMessage("§c§l✗ §cUsunieto home! §c§l✗ \n" + "§7X: §e" + x +" §7Y: §e" + y + " §7Z: §e " + z);
